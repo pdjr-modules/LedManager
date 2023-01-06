@@ -23,6 +23,20 @@
  * METHODS
  * 
  * setStatus(status)
+ * Sets the state of all LEDs to either on or off from the bit values
+ * of <status>.
+ * 
+ * getStatus()
+ * Returns an unsigned char representing the current state of al LEDs.
+ * 
+ * setLedState(led, state)
+ * Set the state of LED <led> to the value supplied by state (i.e. one
+ * of on, off, once or flash).
+ * 
+ * getLedState(led)
+ * Returns unsigned char representing the current state of LED <led>.
+ * The value should be cast into an enum in the following way:
+ *   (StatusLeds::Ledstate) myStatusLeds.getState(4);
  */
  
 class StatusLeds {
