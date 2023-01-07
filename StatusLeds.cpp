@@ -46,7 +46,7 @@ void StatusLeds::update(bool force, bool performCallback) {
   unsigned long now = millis();
   unsigned char status = this->getStatus();
 
-  if ((now > deadline) || (force)) {
+  if (((this->updateInterval) && (now > deadline)) || (force)) {
     for (unsigned int led = 0; led < this->nleds; led++) {
       switch (this->leds[led]) {
         case on: case off:
