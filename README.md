@@ -89,28 +89,8 @@ setting *force* to true.
 
 ### update(force, performCallback)
 
-As above except after the update has been completed and defined
-callback function is executed with the 
+As above except after the update has been completed and if
+*performCallback* is true and a callback function was defined
+at instantiation the the callback function is executed with the
+value of getStatus() as returned at the start of update.
 
-
-if *performCallback* is true  and a callback function was defined 
-
-### process()
-
-This method will typically be called from loop.
-
-If the process interval (defined at instantiation) has elapsed, then
-computes the current LED status using the getStatus() method and passes
-the result as an argument to any defined callback function, afterwards
-calling the update() method to automate any required LED state
-transformations. 
-
-### process(update)
-
-As process(), except that the update() method is only called if
-**update** is true.
-
-### process(update, force)
-
-As process(update), except that processing will be performed
-immediately (i.e. without regard for any defined process interval).
