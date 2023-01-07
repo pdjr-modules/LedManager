@@ -36,7 +36,7 @@ automatic update interval of *updateInterval* milliseconds.
 
 Create a StatusLeds instance for handling up to *nleds* with an
 automatic update interval *updateInterval* millisecods. At each
-each update interval the function *callback* will be invoked with
+each update interval the function *callback* may be invoked with
 the status of the LED collection passed as its only argument.
 
 ## TYPES
