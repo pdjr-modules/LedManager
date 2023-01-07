@@ -78,8 +78,8 @@ value.
 If a non-zero updateInterval was defined at instantiation and the
 interval since last update has expired, then update each LED channel
 by transforming ```thrice``` to ```twice```, ```twice``` to ```once```,
-```once``` to ```off```, ```flash``` to ```flashon```, ```flashon```
-to ```flashoff``` and ```flashoff``` to ```flashon```.
+```once``` to ```off```, ```flash``` to ```flashOn```, ```flashOn```
+to ```flashOff``` and ```flashOff``` to ```flashOn```.
 The update interval timer is reset. 
 
 ### update(*force*)
