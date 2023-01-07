@@ -4,22 +4,22 @@ StatusLeds::StatusLeds(unsigned int nleds, unsigned long processInterval, void (
   this->nleds = nleds;
   this->processInterval = processInterval;
   this->callback = callback;
-  this->leds = new unsigned char[this->nleds];
+  this->leds = new LedState [this->nleds];
 
-  for (unsigned int i = 0; i < this->nleds; i++) this->leds[i] = (unsigned char) LedState::off;
+  for (unsigned int i = 0; i < this->nleds; i++) this->leds[i] = off;
 }
 
 void StatusLeds::setStatus(unsigned char status) {
   for (unsigned int led = 0; led < this->nleds; led++) {
-    this->leds[led] = (unsigned char) ((status >> led) &0x01)?LedState::on:LedState::off;
+    this->leds[led] = ((status >> led) &0x01)?on:off;
   }
 }
 
 void StatusLeds::setLedState(unsigned int led, LedState state) {
-  this->leds[led] = (unsigned char) state;
+  this->leds[led] = state;
 }
 
-unsigned char StatusLeds::getLedState(unsigned int led) {
+StatusLeds::LedState StatusLeds::getLedState(unsigned int led) {
     return(this->leds[led]);
 }
 
@@ -27,7 +27,7 @@ unsigned char StatusLeds::getStatus() {
   unsigned char status = 0;
 
   for (unsigned int led = 0; led < this->nleds; led++) {
-    switch ((LedState) this->leds[led]) {
+    switch (this->leds[led]) {
       case on:
         status |= (0x01 << led);
         break;
@@ -36,17 +36,17 @@ unsigned char StatusLeds::getStatus() {
         break;
       case once:
         status |= (0x01 << led);
-        this->leds[led] = (unsigned char) LedState::off;
+        this->leds[led] = off;
         break;
       case flash:
-        this->leds[led] = (unsigned char) LedState::flashOn;
+        this->leds[led] = flashOn;
         break;
       case flashOn:
         status |= (0x01 << led);
-        this->leds[led] = (unsigned char) LedState::flashOff;
+        this->leds[led] = flashOff;
       case flashOff:
         status &= ~(0x01 << led);
-        this->leds[led] = (unsigned char) LedState::flashOn;
+        this->leds[led] = flashOn;
     }
   }
   return(status);
