@@ -12,7 +12,7 @@ periodically by a built-in timer.
 A callback interface allows an external function to be updated with the
 LED collection status at each update.
 The callback function will typically be used by an application to
-operate some specific interface so that it reflects the StatusLeds
+operate some specific interface so that it reflects StatusLeds'
 internal state.
 
 ## CONSTRUCTORS
