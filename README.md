@@ -1,7 +1,7 @@
 # StatusLeds
 
 Manage and process the state of an arbitrarily sized collection of LEDs
-where each LED in the banknis identified by a zero-based integer index.
+where each LED in the bank is identified by a zero-based integer index.
 
 An update mechanism (implemented by the update() method) supports
 automation of some state transitions allowing flashing of individual LEDs
