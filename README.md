@@ -20,17 +20,17 @@ specific interface so that it reflect the StatusLeds internal state.
 Create a StatusLeds instance for handling up to eight LEDS. Automatic
 update is disabled.
 
-### StatusLeds(nleds)
+### StatusLeds(*nleds*)
 
 Create a StatusLeds instance for handling up to *nleds* LEDs.
 Automatic update is disabled.
 
-### StatusLeds(nleds, updateInterval)
+### StatusLeds(*nleds*, *updateInterval*)
 
 Create a StatusLeds instance for handling up to *nleds* with an
 automatic update interval of *updateInterval* milliseconds.
 
-### StatusLeds(nleds, updateInterval, callback)
+### StatusLeds(*nleds*, *updateInterval*, *callback*)
 
 Create a StatusLeds instance for handling up to *nleds* with an
 automatic update interval *updateInterval* millisecods. At each
@@ -48,7 +48,7 @@ are used internally.
 
 ## METHODS
 
-### setStatus(status)
+### setStatus(*status*)
 
 Sets the state of all LEDs in a single operation by interpreting bit
 values in *status*. The least-significant bit corresponds to LED zero
@@ -59,16 +59,16 @@ and a binary 1 is mapped to ```on```, a binary 0 to ```off```.
 Returns the current state of all LEDs as an unsigned char where each bit
 represents the real-time state of the corresponding LED.
 
-### getStatus(performUpdate)
+### getStatus(*performUpdate*)
 
 As getStatus(), but if *performUpdate* is true, then execute the
 update() method after computing the status return value.
 
-### setLedState(led, state)
+### setLedState(*led*, *state*)
 
 Set the state of the LED indexed by *led* to LedState *state*.
 
-### getLedState(led)
+### getLedState(*led*)
 
 Returns the current state of the LED indexed by *led* as an LedState
 value.
@@ -82,12 +82,12 @@ by transforming ```thrice``` to ```twice```, ```twice``` to ```once```,
 to ```flashoff``` and ```flashoff``` to ```flashon```.
 The update interval timer is reset. 
 
-### update(force)
+### update(*force*)
 
 As above, except that the update can be performed immediately by
 setting *force* to true.
 
-### update(force, performCallback)
+### update(*force*, *performCallback*)
 
 As above except after the update has been completed and if
 *performCallback* is true and a callback function was defined
