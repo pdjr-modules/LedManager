@@ -14,7 +14,7 @@ class StatusLeds {
     unsigned char getStatus(bool performUpdate = false);
     void setLedState(unsigned int led, LedState state);
     StatusLeds::LedState getLedState(unsigned int led);
-    void update(bool force = false, performCallback = false);
+    void update(bool force = false, bool performCallback = false);
 
   private:
     unsigned int nleds;

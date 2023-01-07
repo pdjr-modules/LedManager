@@ -15,12 +15,12 @@ void StatusLeds::setStatus(unsigned char status) {
   }
 }
 
-unsigned char getStatus(bool performUpdate) {
+unsigned char StatusLeds::getStatus(bool performUpdate) {
   unsigned char status = 0;
 
   for (unsigned int led = 0; led < this->nleds; led++) {
     switch (this->leds[led]) {
-      case off: case flashoff:
+      case off: case flashOff:
         status &= ~(0x01 << led);
         break;
       default:
