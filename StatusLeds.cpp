@@ -20,7 +20,7 @@ unsigned char StatusLeds::getStatus(bool performUpdate) {
 
   for (unsigned int led = 0; led < this->nleds; led++) {
     switch (this->leds[led]) {
-      case off: case flashOff:
+      case off: case flashOff: case twiceOff: case thriceOff:
         status &= ~(0x01 << led);
         break;
       default:
@@ -55,18 +55,22 @@ void StatusLeds::update(bool force, bool performCallback) {
           this->leds[led] = off;
           break;
         case twice:
+          this->leds[led] = twiceOff;
+          break;
+        case twiceOff:
           this->leds[led] = once;
           break;
         case thrice:
+          this->leds[led] = thriceOff;
+          break;
+        case thriceOff:
           this->leds[led] = twice;
           break;
         case flash:
-          this->leds[led] = flashOn;
-          break;
-        case flashOn:
           this->leds[led] = flashOff;
+          break;
         case flashOff:
-          this->leds[led] = flashOn;
+          this->leds[led] = flash;
       }
     }
     if (this->updateInterval) deadline = (now + this->updateInterval);

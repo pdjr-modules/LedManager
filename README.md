@@ -1,11 +1,12 @@
 # StatusLeds
 
 Manage and process the state of an arbitrarily sized collection of LEDs
-where each LED in the bank is identified by a zero-based integer index.
+where each LED in the collection is identified by a zero-based integer
+index.
 
-An update mechanism (implemented by the update() method) supports
-automation of some state transitions allowing flashing of individual LEDs
-at a user determined rate.
+An update mechanism (implemented by the ```update()``` method) supports
+automatic state transitions allowing flashing of individual LEDs at a
+user determined rate.
 Updates can be triggered manually, but will usually be invoked
 periodically by a built-in timer.
 
@@ -14,6 +15,18 @@ LED collection status at each update.
 The callback function will typically be used by an application to
 operate some specific interface so that it reflects StatusLeds'
 internal state.
+
+The state of each LED in a StatusLeds collection can be set by the host
+application to one of the following values.
+
+| Value                    | Meaning |
+| :---                     | :---    |
+| ```LedState::on```       | Switch the LED on. |
+| ```LedState::off```      | Switch the LED off. |
+| ```LedState::flash```    | Set the LED to flash continuously. |
+| ```LedState::once```     | Set the LED to flash once, then turn off. |
+| ```LedState::twice```    | Set the LED to flash twice, then turn off. |
+| ```LedState::thrice```   | Set the LED to flash three times, then turn off. |
 
 ## CONSTRUCTORS
 
@@ -39,14 +52,6 @@ automatic update interval *updateInterval* millisecods. At each
 each update interval the function *callback* may be invoked with
 the status of the LED collection passed as its only argument.
 
-## TYPES
-
-### typedef enum eLedState { on, off, once, twice, thrice, flash, flashOn, flashOff } LedState
-
-The state of each LED in a StatusLeds collection can be set by the host
-application to one of  ```on```, ```off```, ```once```, ```twice```,
-```thrice``` or ```flash``` (the values ```flashon``` and ```flashoff```)
-are used internally.
 
 ## METHODS
 

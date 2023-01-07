@@ -7,7 +7,7 @@
 class StatusLeds {
 
   public:
-    typedef enum eLedState { on, off, flash, once, twice, thrice, flashOn, flashOff } LedState;
+    typedef enum eLedState { on, off, once, twice, twiceOff, thrice, thriceOff, flash, flashOff } LedState;
 
     StatusLeds(unsigned int nleds = 8, unsigned long updateInterval = 200UL, void (*callback)(unsigned char) = 0);
     void setStatus(unsigned char status);
