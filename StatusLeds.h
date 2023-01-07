@@ -9,17 +9,18 @@ class StatusLeds {
   public:
     typedef enum eLedState { on, off, flash, once, flashOn, flashOff } LedState;
 
-    StatusLeds(unsigned int nleds, unsigned long processInterval, void (*callback)(unsigned char));
+    StatusLeds(unsigned int nleds, void (*callback)(unsigned char) = 0, unsigned long processInterval = 200UL);
     void setStatus(unsigned char status);
-    unsigned char getStatus();
+    unsigned char getStatus(bool performUpdate = false);
     void setLedState(unsigned int led, LedState state);
     StatusLeds::LedState getLedState(unsigned int led);
-    void process();
+    void update();
+    void process(bool performUpdate = true, bool force = false);
 
   private:
     unsigned int nleds;
-    unsigned long processInterval;
     void (*callback)(unsigned char);    
+    unsigned long processInterval;
     LedState *leds;
 
 };
