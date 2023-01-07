@@ -101,3 +101,4 @@ As above except after the update has been completed and if
 at instantiation the the callback function is executed with the
 value of getStatus() as returned at the start of update.
 
+
