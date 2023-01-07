@@ -1,72 +1,99 @@
 # StatusLeds
 
-Class to provide a control interface and update mechanism for an
-arbitrarily sized bank of LEDs. Each LED in the banks identified by
-an integer index starting from zero.
+Manage and process the state of an arbitrarily sized collection of LEDs
+where each LED in the banks identified by a zero-based integer index.
+
+An update mechanism (implemented by the update() method) supports
+automation of some state transitions allowing flashing of individual LEDs
+at a user determined rate.
+
+A callback interface (implemented by the process() method) allows an
+external function to be updated with the LED collection status at the
+specifified update interval.
+The callback function will typically be used to update some application
+specific interface so that it reflect the StatusLeds internal state.
 
 ## CONSTRUCTORS
 
+### StatusLeds()
+
+Create a StatusLeds instance for handling up to eight LEDS. Automatic
+update is disabled.
+
 ### StatusLeds(nleds)
 
-Create a StatusLeds instance for handling up to **nleds** LEDs with no
-support for automatic processing. 
+Create a StatusLeds instance for handling up to *nleds* LEDs.
+Automatic update is disabled.
 
-### StatusLeds(nleds, callback)
+### StatusLeds(nleds, updateInterval)
 
-Create a StatusLeds instance for handling up to **nleds** and process
-it automatically by executing the **callback** function every 200
-milliseconds. **callback** must have the type signature
-```void (**\*callback**)(unsigned char **status**)```
+Create a StatusLeds instance for handling up to *nleds* with an
+automatic update interval of *updateInterval* milliseconds.
 
-### StatusLeds(nleds, callback, processInterval)
+### StatusLeds(nleds, updateInterval, callback)
 
-Create a StatusLeds instance for handling up to **nleds** and process
-automatically by executing the **callback** function every
-**processInterval** milliseconds. **callback** must have the type
-signature ```void (**\*callback**)(unsigned char **status**)```
+Create a StatusLeds instance for handling up to *nleds* with an
+automatic update interval *updateInterval* millisecods. At each
+each update interval the function *callback* will be invoked with
+the status of the LED collection passed as its only argument.
 
 ## TYPES
 
-### typedef enum eLedState { on, off, once, flash, flashOn, flashOff } LedState
+### typedef enum eLedState { on, off, once, twice, thrice, flash, flashOn, flashOff } LedState
 
 The state of each LED in a StatusLeds collection can be set by the host
-application to one of  ```on```, ```off```, ```once``` or ```flash```
-(the values ```flashon``` and ```flashoff```) are used internally and,
-together with ```once``` are re-assigned values each time getStatus()
-is invoked.
+application to one of  ```on```, ```off```, ```once```, ```twice```,
+```thrice``` or ```flash``` (the values ```flashon``` and ```flashoff```)
+are used internally.
 
 ## METHODS
 
 ### setStatus(status)
 
 Sets the state of all LEDs in a single operation by interpreting bit
-values in **status**. The least-significant bit corresponds to LED zero
+values in *status*. The least-significant bit corresponds to LED zero
 and a binary 1 is mapped to ```on```, a binary 0 to ```off```.
 
 ### getStatus()
 
 Returns the current state of all LEDs as an unsigned char where each bit
-represents the ```on``` or ```off``` condition of the associated LED.
+represents the real-time state of the corresponding LED.
 
 ### getStatus(performUpdate)
 
-As getStatus(), but if **performUpdate** is true, then execute the
+As getStatus(), but if *performUpdate* is true, then execute the
 update() method after computing the status return value.
 
 ### setLedState(led, state)
 
-Set the state of the LED idexed by **led** to LedState **state**.
+Set the state of the LED indexed by *led* to LedState *state*.
 
 ### getLedState(led)
 
-Returns the current state of the LED indexed by **led** as an LedState
-value: ```off``` maps to binary 0, all other states to binary 1.
+Returns the current state of the LED indexed by *led* as an LedState
+value.
 
 ### update()
 
-Updates each LED channel by transforming ```once``` to ```off```,
-```flash``` to ```flashon```, ```flashon``` to ```flashoff``` and
-```flashoff``` to ```flashon```.
+If a non-zero updateInterval was defined at instantiation and the
+interval since last update has expired, then update each LED channel
+by transforming ```thrice``` to ```twice```, ```twice``` to ```once```,
+```once``` to ```off```, ```flash``` to ```flashon```, ```flashon```
+to ```flashoff``` and ```flashoff``` to ```flashon```.
+The update interval timer is reset. 
+
+### update(force)
+
+As above, except that the update can be performed immediately by
+setting *force* to true.
+
+### update(force, performCallback)
+
+As above except after the update has been completed and defined
+callback function is executed with the 
+
+
+if *performCallback* is true  and a callback function was defined 
 
 ### process()
 
