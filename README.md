@@ -6,12 +6,14 @@ where each LED in the banknis identified by a zero-based integer index.
 An update mechanism (implemented by the update() method) supports
 automation of some state transitions allowing flashing of individual LEDs
 at a user determined rate.
+Updates can be triggered manually, but will usually be invoked
+periodically by a built-in timer.
 
-A callback interface (implemented by the process() method) allows an
-external function to be updated with the LED collection status at the
-specifified update interval.
-The callback function will typically be used to update some application
-specific interface so that it reflect the StatusLeds internal state.
+A callback interface allows an external function to be updated with the
+LED collection status at each update.
+The callback function will typically be used by an application to
+operate some specific interface so that it reflects the StatusLeds
+internal state.
 
 ## CONSTRUCTORS
 
