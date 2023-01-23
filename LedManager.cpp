@@ -1,6 +1,6 @@
-#include "StatusLeds.h"
+#include "LedManager.h"
 
-StatusLeds::StatusLeds(unsigned int nleds, unsigned long updateInterval, void (*callback)(unsigned char)) {
+LedManager::LedManager(unsigned int nleds, unsigned long updateInterval, void (*callback)(unsigned char)) {
   this->nleds = nleds;
   this->callback = callback;
   this->updateInterval = updateInterval;
@@ -9,13 +9,13 @@ StatusLeds::StatusLeds(unsigned int nleds, unsigned long updateInterval, void (*
   for (unsigned int i = 0; i < this->nleds; i++) this->leds[i] = off;
 }
 
-void StatusLeds::setStatus(unsigned char status) {
+void LedManager::setStatus(unsigned char status) {
   for (unsigned int led = 0; led < this->nleds; led++) {
     this->leds[led] = ((status >> led) &0x01)?on:off;
   }
 }
 
-unsigned char StatusLeds::getStatus(bool performUpdate) {
+unsigned char LedManager::getStatus(bool performUpdate) {
   unsigned char status = 0;
 
   for (unsigned int led = 0; led < this->nleds; led++) {
@@ -33,15 +33,15 @@ unsigned char StatusLeds::getStatus(bool performUpdate) {
 
 }
 
-void StatusLeds::setLedState(unsigned int led, LedState state) {
+void LedManager::setLedState(unsigned int led, LedState state) {
   this->leds[led] = state;
 }
 
-StatusLeds::LedState StatusLeds::getLedState(unsigned int led) {
+LedManager::LedState LedManager::getLedState(unsigned int led) {
     return(this->leds[led]);
 }
 
-void StatusLeds::update(bool force, bool performCallback) {
+void LedManager::update(bool force, bool performCallback) {
   static unsigned long deadline = 0UL;
   unsigned long now = millis();
   unsigned char status = this->getStatus();
