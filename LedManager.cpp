@@ -1,24 +1,22 @@
 #include "LedManager.h"
 
-LedManager::LedManager(unsigned int nleds, unsigned long updateInterval, void (*callback)(unsigned char)) {
-  this->nleds = nleds;
-  this->callback = callback;
+LedManager::LedManager(unsigned long updateInterval, void (*callback)(uint32_t)) {
   this->updateInterval = updateInterval;
-
-  this->leds = new LedState [this->nleds];
-  for (unsigned int i = 0; i < this->nleds; i++) this->leds[i] = off;
+  this->callback = callback;
+  this->leds = new LedState[32];
+  for (unsigned int i = 0; i < 32; i++) this->leds[i] = off;
 }
 
-void LedManager::setStatus(unsigned char status) {
-  for (unsigned int led = 0; led < this->nleds; led++) {
+void LedManager::setStatus(uint32_t status) {
+  for (unsigned int led = 0; led < 32; led++) {
     this->leds[led] = ((status >> led) &0x01)?on:off;
   }
 }
 
-unsigned char LedManager::getStatus(bool performUpdate) {
-  unsigned char status = 0;
+uint32_t LedManager::getStatus() {
+  uint32_t status = 0;
 
-  for (unsigned int led = 0; led < this->nleds; led++) {
+  for (unsigned int led = 0; led < 32; led++) {
     switch (this->leds[led]) {
       case off: case flashOff: case twiceOff: case thriceOff:
         status &= ~(0x01 << led);
@@ -28,9 +26,7 @@ unsigned char LedManager::getStatus(bool performUpdate) {
         break;
     }
   }
-  if (performUpdate) this->update();
   return(status);
-
 }
 
 void LedManager::setLedState(unsigned int led, LedState state) {
@@ -47,7 +43,7 @@ void LedManager::update(bool force, bool performCallback) {
   unsigned char status = this->getStatus();
 
   if (((this->updateInterval) && (now > deadline)) || (force)) {
-    for (unsigned int led = 0; led < this->nleds; led++) {
+    for (unsigned int led = 0; led < 32; led++) {
       switch (this->leds[led]) {
         case on: case off:
           break;
@@ -75,5 +71,5 @@ void LedManager::update(bool force, bool performCallback) {
     }
     if (this->updateInterval) deadline = (now + this->updateInterval);
   }
-  if ((performCallback) && (this->callback)) this->callback(status);
+  if ((performCallback) && (this->callback)) this->callback(this->getStatus());
 }
