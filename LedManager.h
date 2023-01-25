@@ -55,7 +55,7 @@ class LedManager {
      * @return unsigned int - a bitmap representing the current state
      * of the LED bank. 
      */
-    uint32_t getStatus(bool performUpdate = false);
+    uint32_t getStatus();
 
     /**
      * @brief Set the state of a single LED.
@@ -92,7 +92,7 @@ class LedManager {
     void update(bool force = false, bool performCallback = true);
 
   private:
-    void (*callback)(unsigned char);    
+    void (*callback)(uint32_t);    
     unsigned long updateInterval;
     LedState *leds;
 

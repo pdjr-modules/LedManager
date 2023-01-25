@@ -40,7 +40,7 @@ LedManager::LedState LedManager::getLedState(unsigned int led) {
 void LedManager::update(bool force, bool performCallback) {
   static unsigned long deadline = 0UL;
   unsigned long now = millis();
-  unsigned char status = this->getStatus();
+  uint32_t status = this->getStatus();
 
   if (((this->updateInterval) && (now > deadline)) || (force)) {
     for (unsigned int led = 0; led < 32; led++) {
@@ -71,5 +71,5 @@ void LedManager::update(bool force, bool performCallback) {
     }
     if (this->updateInterval) deadline = (now + this->updateInterval);
   }
-  if ((performCallback) && (this->callback)) this->callback(this->getStatus());
+  if ((performCallback) && (this->callback)) this->callback(status);
 }
