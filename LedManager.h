@@ -16,7 +16,7 @@
  * allows the host application to express the current state of the LED
  * bank on some external entity like a physical LED array or GUI.
  */
-class LedManager {
+class tLedManager {
 
   public:
     /**
@@ -40,7 +40,7 @@ class LedManager {
      *        update interval with a bit-map representation of the LED
      *        bank status.
      */
-    LedManager(unsigned long updateInterval = 200UL, void (*callback)(uint32_t) = 0);
+    tLedManager(unsigned long updateInterval = 200UL, void (*callback)(uint32_t) = 0);
 
     /**
      * @brief Set the state of LED bank from a bit map.
@@ -72,7 +72,7 @@ class LedManager {
      * @return LedManager::LedState - the current state of the selected
      * LED.
      */
-    LedManager::LedState getLedState(unsigned int led);
+    tLedManager::LedState getLedState(unsigned int led);
 
     /**
      * @brief Update the LED bank state, performing any automatic state

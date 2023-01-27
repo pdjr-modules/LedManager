@@ -1,19 +1,19 @@
 #include "LedManager.h"
 
-LedManager::LedManager(unsigned long updateInterval, void (*callback)(uint32_t)) {
+tLedManager::tLedManager(unsigned long updateInterval, void (*callback)(uint32_t)) {
   this->updateInterval = updateInterval;
   this->callback = callback;
   this->leds = new LedState[32];
   for (unsigned int i = 0; i < 32; i++) this->leds[i] = off;
 }
 
-void LedManager::setStatus(uint32_t status) {
+void tLedManager::setStatus(uint32_t status) {
   for (unsigned int led = 0; led < 32; led++) {
     this->leds[led] = ((status >> led) &0x01)?on:off;
   }
 }
 
-uint32_t LedManager::getStatus() {
+uint32_t tLedManager::getStatus() {
   uint32_t status = 0;
 
   for (unsigned int led = 0; led < 32; led++) {
@@ -29,15 +29,15 @@ uint32_t LedManager::getStatus() {
   return(status);
 }
 
-void LedManager::setLedState(unsigned int led, LedState state) {
+void tLedManager::setLedState(unsigned int led, LedState state) {
   this->leds[led] = state;
 }
 
-LedManager::LedState LedManager::getLedState(unsigned int led) {
+tLedManager::LedState tLedManager::getLedState(unsigned int led) {
     return(this->leds[led]);
 }
 
-void LedManager::update(bool force, bool performCallback) {
+void tLedManager::update(bool force, bool performCallback) {
   static unsigned long deadline = 0UL;
   unsigned long now = millis();
   uint32_t status = this->getStatus();
