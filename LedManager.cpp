@@ -1,75 +1,50 @@
+/**********************************************************************
+ * LedManager.cpp - manage an arbitrary number of leds.
+ * 2020 (c) Paul Reeve <preeve@pdjr.eu>
+ */
+
+#include <cstddef>
+#include "Arduino.h"
 #include "LedManager.h"
 
-tLedManager::tLedManager(unsigned long updateInterval, void (*callback)(uint32_t)) {
-  this->updateInterval = updateInterval;
+/**********************************************************************
+ * Create a new LedManager instance with optional <heartbeat> (in
+ * milliseconds) and <interval> in heartbeats.
+ * 
+ * <heartbeat> defines the flasher's basic period and applies to both
+ * on and off phases whilst <interval> defines the quiescent period
+ * between flash cycles.
+ */
+LedManager::LedManager(void (*callback)(unsigned char status), unsigned long interval) {
   this->callback = callback;
-  this->leds = new LedState[32];
-  for (unsigned int i = 0; i < 32; i++) this->leds[i] = off;
+  this->interval = interval;
+
+  this>states = new int[LedManager::LED_COUNT];
+  for (int i = 0; i < LedManager::LED_COUNT; i++) this->states[i] = LedManager::OFF;
+  this->deadline = 0UL;
 }
 
-void tLedManager::setStatus(uint32_t status) {
-  for (unsigned int led = 0; led < 32; led++) {
-    this->leds[led] = ((status >> led) &0x01)?on:off;
-  }
+void LedManager::setLedState(unsigned int led, LedManager::Pattern pattern) {
+  if (led < LedManager::LED_COUNT) this->states[led] = pattern;
 }
 
-uint32_t tLedManager::getStatus() {
-  uint32_t status = 0;
-
-  for (unsigned int led = 0; led < 32; led++) {
-    switch (this->leds[led]) {
-      case off: case flashOff: case twiceOff: case thriceOff:
-        status &= ~(0x01 << led);
-        break;
-      default:
-        status |= (0x01 << led);
-        break;
-    }
-  }
-  return(status);
-}
-
-void tLedManager::setLedState(unsigned int led, LedState state) {
-  this->leds[led] = state;
-}
-
-tLedManager::LedState tLedManager::getLedState(unsigned int led) {
-    return(this->leds[led]);
-}
-
-void tLedManager::update(bool force, bool performCallback) {
-  static unsigned long deadline = 0UL;
+void update() {
   unsigned long now = millis();
-  uint32_t status = this->getStatus();
+  unsigned int status = 0;
 
-  if (((this->updateInterval) && (now > deadline)) || (force)) {
-    for (unsigned int led = 0; led < 32; led++) {
-      switch (this->leds[led]) {
-        case on: case off:
-          break;
-        case once:
-          this->leds[led] = off;
-          break;
-        case twice:
-          this->leds[led] = twiceOff;
-          break;
-        case twiceOff:
-          this->leds[led] = once;
-          break;
-        case thrice:
-          this->leds[led] = thriceOff;
-          break;
-        case thriceOff:
-          this->leds[led] = twice;
-          break;
-        case flash:
-          this->leds[led] = flashOff;
-          break;
-        case flashOff:
-          this->leds[led] = flash;
+  if (now > this->deadline) {
+    for (int i = 0; i < LedManager::LED_COUNT; i++) {
+      status << 1;
+      switch (this->status[i]) {
+        case LedManager::THRICE: status &= 1; this->status[i] = LedManager::OFF_TWICE_NEXT; break;
+        case LedManager::OFF_TWICE_NEXT: status &= 0; this->status[i] = LedManager::OFF_TWICE_NEXT; break;
+        case LedManager::TWICE: status &= 1; this->status[i] = LedManager::OFF_ONCE_NEXT; break;
+        case LedManager::OFF_ONCE_NEXT: status &= 0; this->status[i] = LedManager::OFF_ONCE_NEXT; break;
+        case LedManager::ONCE: status &= 1; this->status[i] = LedManager::OFF; break;
+        case LedManager::OFF: status &= 0; break;
       }
     }
-    if (this->updateInterval) deadline = (now + this->updateInterval);
+    this->update(status);
+    this->deadline = (now + this->interval);
   }
-  if ((performCallback) && (this->callback)) this->callback(status);
 }
