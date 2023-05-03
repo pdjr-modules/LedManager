@@ -42,7 +42,7 @@ class LedManager {
     /**
      * @brief Led state options
      */
-    enum Pattern { OFF, ONCE, OFF_ONCE_NEXT, TWICE, OFF_TWICE_NEXT, THRICE };
+    enum Pattern { ON, FLASH, ONCE, TWICE, THRICE, OFF, FLASH_OFF, TWICE_OFF, THRICE_OFF };
 
     /**
      * @brief Construct a new Led Manager object
@@ -50,8 +50,9 @@ class LedManager {
      * @param interval - equiphase heartbeat interval in milliseconds.
      * @param callback - function to operate the physical LED or whatever and set it to status.
      */
-    LedManager(void (*callback)(unsigned char status), unsigned long interval = 200);
+    LedManager(void (*callback)(unsigned int status), unsigned long interval = 200);
 
+    void setStatus(unsigned int status);
     /**
      * @brief Set the state of particular LED.
      * 
@@ -62,9 +63,9 @@ class LedManager {
     
     void update();
   private:
-    void (*callback)(unsigned char status);
+    void (*callback)(unsigned int status);
     unsigned int interval;
-    LedManager::Pattern *states;
+    int *states;
     unsigned long deadline;
 };
 
