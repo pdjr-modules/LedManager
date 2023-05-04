@@ -1,36 +1,31 @@
-# StatusLeds
+# LedManager
 
-Manage and process the state of an arbitrarily sized collection of LEDs
-where each LED in the collection is identified by a zero-based integer
-index.
+**LedManager** implements the ```tLedManager``` class which provides
+an operating interface for an arbitrarily sized collection of LEDs.
 
 An update mechanism (implemented by the ```update()``` method) supports
 automatic state transitions allowing flashing of individual LEDs at a
 user determined rate.
-Updates can be triggered manually, but will usually be invoked
-periodically by a built-in timer.
 
-A callback interface allows an external function to be updated with the
-LED collection status at each update.
-The callback function will typically be used by an application to
-operate some specific interface so that it reflects StatusLeds'
-internal state.
+Output devices (typically LEDs) are operated by a callback mechanism
+which abstracts physical operation from the abstract operations supported
+by **LedManager**.
 
-The state of each LED in a StatusLeds collection can be set by the host
-application to one of the following values.
+The mode of each LED in a ```tLedManger``` collection can be set by the
+host application to one of the following values.
 
-| Value                    | Meaning |
-| :---                     | :---    |
-| ```LedState::on```       | Switch the LED on. |
-| ```LedState::off```      | Switch the LED off. |
-| ```LedState::flash```    | Set the LED to flash continuously. |
-| ```LedState::once```     | Set the LED to flash once, then turn off. |
-| ```LedState::twice```    | Set the LED to flash twice, then turn off. |
-| ```LedState::thrice```   | Set the LED to flash three times, then turn off. |
+| Value                     | Meaning |
+| :---                      | :---    |
+| ```tLedManager::ON```     | Switch the LED on. |
+| ```tLedManager::OFF```    | Switch the LED off. |
+| ```tLedManager::FLASH```  | Set the LED to flash continuously. |
+| ```tLedManager::ONCE```   | Set the LED to flash once, then turn off. |
+| ```tLedManager::TWICE```  | Set the LED to flash twice, then turn off. |
+| ```tLedManager::THRICE``` | Set the LED to flash three times, then turn off. |
 
 ## CONSTRUCTORS
 
-### StatusLeds()
+### LedManager()
 
 Create a StatusLeds instance for handling up to eight LEDS. Automatic
 update is disabled.
