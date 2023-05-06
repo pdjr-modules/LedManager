@@ -15,40 +15,40 @@
  * on and off phases whilst <interval> defines the quiescent period
  * between flash cycles.
  */
-tLedManager::tLedManager(void (*callback)(unsigned int status), unsigned long interval) {
+LedManager::LedManager(void (*callback)(unsigned int status), unsigned long interval) {
   this->callback = callback;
   this->interval = interval;
 
-  this->modes = new int[tLedManager::LED_COUNT];
-  for (unsigned int i = 0; i < tLedManager::LED_COUNT; i++) this->modes[i] = tLedManager::OFF;
+  this->modes = new int[LedManager::LED_COUNT];
+  for (unsigned int i = 0; i < LedManager::LED_COUNT; i++) this->modes[i] = LedManager::OFF;
   this->deadline = 0UL;
 }
 
-void tLedManager::setStatus(unsigned int status) {
-  for (unsigned int i = 0; i < tLedManager::LED_COUNT; i++) this->modes[i] = (status & (1 << i))?tLedManager::ON:tLedManager::OFF;
+void LedManager::setStatus(unsigned int status) {
+  for (unsigned int i = 0; i < LedManager::LED_COUNT; i++) this->modes[i] = (status & (1 << i))?LedManager::ON:LedManager::OFF;
 }
 
-void tLedManager::setLedState(unsigned int led, tLedManager::Mode mode) {
-  if (led < tLedManager::LED_COUNT) this->modes[led] = mode;
+void LedManager::setLedState(unsigned int led, LedManager::Mode mode) {
+  if (led < LedManager::LED_COUNT) this->modes[led] = mode;
 }
 
-void tLedManager::update() {
+void LedManager::update() {
   unsigned long now = millis();
   unsigned int status = 0;
 
   if (now > this->deadline) {
-    for (unsigned int i = 0; i < tLedManager::LED_COUNT; i++) {
+    for (unsigned int i = 0; i < LedManager::LED_COUNT; i++) {
       status <<= 1;
       switch (this->modes[i]) {
-        case tLedManager::THRICE: status |= 1; this->modes[i] = tLedManager::THRICE_OFF; break;
-        case tLedManager::THRICE_OFF: this->modes[i] = tLedManager::TWICE; break;
-        case tLedManager::TWICE: status |= 1; this->modes[i] = tLedManager::TWICE_OFF; break;
-        case tLedManager::TWICE_OFF: this->modes[i] = tLedManager::ONCE; break;
-        case tLedManager::ONCE: status |= 1; this->modes[i] = tLedManager::OFF; break;
-        case tLedManager::FLASH: status |= 1; this->modes[i] = tLedManager::FLASH_OFF; break;
-        case tLedManager::FLASH_OFF: this->modes[i] = tLedManager::FLASH; break;
-        case tLedManager::ON: status |= 1; break;
-        case tLedManager::OFF: break;
+        case LedManager::THRICE: status |= 1; this->modes[i] = LedManager::THRICE_OFF; break;
+        case LedManager::THRICE_OFF: this->modes[i] = LedManager::TWICE; break;
+        case LedManager::TWICE: status |= 1; this->modes[i] = LedManager::TWICE_OFF; break;
+        case LedManager::TWICE_OFF: this->modes[i] = LedManager::ONCE; break;
+        case LedManager::ONCE: status |= 1; this->modes[i] = LedManager::OFF; break;
+        case LedManager::FLASH: status |= 1; this->modes[i] = LedManager::FLASH_OFF; break;
+        case LedManager::FLASH_OFF: this->modes[i] = LedManager::FLASH; break;
+        case LedManager::ON: status |= 1; break;
+        case LedManager::OFF: break;
       }
     }
     this->callback(status);

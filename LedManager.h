@@ -10,7 +10,7 @@
  * @brief Class providing the logic for operating one or more notional
  * LEDs. 
  */
-class tLedManager {
+class LedManager {
 
   public:
     /**
@@ -43,7 +43,7 @@ class tLedManager {
      * current state of the control group: a 0 bit value says 'off'; a
      * 1 bit value says 'on'.
      */
-    tLedManager(void (*callback)(unsigned int status), unsigned long interval = 200);
+    LedManager(void (*callback)(unsigned int status), unsigned long interval = 200);
 
     /**
      * @brief Set the Mode of each LED in the contro group to ON or
@@ -62,7 +62,7 @@ class tLedManager {
      * @param led - index of the LED to be updated.
      * @param mode - the Mode to be assigned.
      */
-    void setLedState(unsigned int led, tLedManager::Mode mode);
+    void setLedState(unsigned int led, LedManager::Mode mode);
     
     /**
      * @brief Perform a mode transition on all LEDs in the control
