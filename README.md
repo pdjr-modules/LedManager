@@ -1,99 +1,72 @@
-# LedManager
+# class `LedManager` 
 
-**LedManager** implements the ```tLedManager``` class which provides
-an operating interface for an arbitrarily sized collection of LEDs.
+Class providing the logic for operating one or more notional LEDs.
 
-An update mechanism (implemented by the ```update()``` method) supports
-automatic state transitions allowing flashing of individual LEDs at a
-user determined rate.
+## Summary
 
-Output devices (typically LEDs) are operated by a callback mechanism
-which abstracts physical operation from the abstract operations supported
-by **LedManager**.
+ Members                        | Descriptions                                
+--------------------------------|---------------------------------------------
+`public  `[`LedManager`](#classLedManager_1aadf9b05e96cb63a1dac4acf6e5447e87)`(void(*)(unsigned int status) callback,unsigned long interval)` | Construct a new tLedManager instance.
+`public void `[`setStatus`](#classLedManager_1a82ccd1a568933b058f6b16e18e03e31e)`(unsigned int status)` | Set the Mode of each LED in the contro group to ON or OFF.
+`public void `[`setLedState`](#classLedManager_1a9f0d7cdaa44dc0552b53b68cd6031d7e)`(unsigned int led,`[`LedManager::Mode`](#classLedManager_1a6f4de90d7619e5cb9b40ec23a1730ab0)` mode)` | Set the state of particular LED.
+`public void `[`update`](#classLedManager_1ae549d2947bc00d5ebc85ed6e6b34c368)`()` | Perform a mode transition on all LEDs in the control group at the specified update interval.
+`enum `[`Mode`](#classLedManager_1a6f4de90d7619e5cb9b40ec23a1730ab0) | Enum defining possible LED states.
 
-The mode of each LED in a ```tLedManger``` collection can be set by the
-host application to one of the following values.
+## Members
 
-| Value                     | Meaning |
-| :---                      | :---    |
-| ```tLedManager::ON```     | Switch the LED on. |
-| ```tLedManager::OFF```    | Switch the LED off. |
-| ```tLedManager::FLASH```  | Set the LED to flash continuously. |
-| ```tLedManager::ONCE```   | Set the LED to flash once, then turn off. |
-| ```tLedManager::TWICE```  | Set the LED to flash twice, then turn off. |
-| ```tLedManager::THRICE``` | Set the LED to flash three times, then turn off. |
+#### `public  `[`LedManager`](#classLedManager_1aadf9b05e96cb63a1dac4acf6e5447e87)`(void(*)(unsigned int status) callback,unsigned long interval)` 
 
-## CONSTRUCTORS
+Construct a new tLedManager instance.
 
-### LedManager()
+#### Parameters
+* `callback` - function to operate a physical output device. 
 
-Create a StatusLeds instance for handling up to eight LEDS. Automatic
-update is disabled.
+* `interval` - equiphase heartbeat interval in milliseconds.
 
-### StatusLeds(*nleds*)
+Instantiates a new control group with the state of all LEDs initialised to OFF.
 
-Create a StatusLeds instance for handling up to *nleds* LEDs.
-Automatic update is disabled.
+Every interval milliseconds the callback function is invoked with its status argument set to represent the current state of the control group: a 0 bit value says 'off'; a 1 bit value says 'on'.
 
-### StatusLeds(*nleds*, *updateInterval*)
+#### `public void `[`setStatus`](#classLedManager_1a82ccd1a568933b058f6b16e18e03e31e)`(unsigned int status)` 
 
-Create a StatusLeds instance for handling up to *nleds* with an
-automatic update interval of *updateInterval* milliseconds.
+Set the Mode of each LED in the contro group to ON or OFF.
 
-### StatusLeds(*nleds*, *updateInterval*, *callback*)
+#### Parameters
+* `status` - Set the [LedManager::Mode](#classLedManager_1a6f4de90d7619e5cb9b40ec23a1730ab0) of the LED group.
 
-Create a StatusLeds instance for handling up to *nleds* with an
-automatic update interval *updateInterval* millisecods. At each
-each update interval the function *callback* may be invoked with
-the status of the LED collection passed as its only argument.
+If a bit in is 1, the corresponding LED Mode is set ON; a 0 bit sets the corresponding LED Mode to OFF.
 
+#### `public void `[`setLedState`](#classLedManager_1a9f0d7cdaa44dc0552b53b68cd6031d7e)`(unsigned int led,`[`LedManager::Mode`](#classLedManager_1a6f4de90d7619e5cb9b40ec23a1730ab0)` mode)` 
 
-## METHODS
+Set the state of particular LED.
 
-### setStatus(*status*)
+#### Parameters
+* `led` - index of the LED to be updated. 
 
-Sets the state of all LEDs in a single operation by interpreting bit
-values in *status*. The least-significant bit corresponds to LED zero
-and a binary 1 is mapped to ```on```, a binary 0 to ```off```.
+* `mode` - the Mode to be assigned.
 
-### getStatus()
+#### `public void `[`update`](#classLedManager_1ae549d2947bc00d5ebc85ed6e6b34c368)`()` 
 
-Returns the current state of all LEDs as an unsigned char where each bit
-represents the real-time state of the corresponding LED.
+Perform a mode transition on all LEDs in the control group at the specified update interval.
 
-### getStatus(*performUpdate*)
+This method should be called from the host loop().
 
-As getStatus(), but if *performUpdate* is true, then execute the
-update() method after computing the status return value.
+#### `enum `[`Mode`](#classLedManager_1a6f4de90d7619e5cb9b40ec23a1730ab0) 
 
-### setLedState(*led*, *state*)
+ Values                         | Descriptions                                
+--------------------------------|---------------------------------------------
+ON            | 
+FLASH            | 
+ONCE            | 
+TWICE            | 
+THRICE            | 
+OFF            | 
+FLASH_OFF            | 
+TWICE_OFF            | 
+THRICE_OFF            | 
 
-Set the state of the LED indexed by *led* to LedState *state*.
+Enum defining possible LED states.
 
-### getLedState(*led*)
+ON and OFF provide steady-state control. FLASH implies continuous isophase flashing. ONCE, TWICE and THRICE imply the indicated number of flashes.
 
-Returns the current state of the LED indexed by *led* as an LedState
-value.
-
-### update()
-
-If a non-zero updateInterval was defined at instantiation and the
-interval since last update has expired, then update each LED channel
-by transforming ```thrice``` to ```twice```, ```twice``` to ```once```,
-```once``` to ```off```, ```flash``` to ```flashOn```, ```flashOn```
-to ```flashOff``` and ```flashOff``` to ```flashOn```.
-The update interval timer is reset. 
-
-### update(*force*)
-
-As above, except that the update can be performed immediately by
-setting *force* to true.
-
-### update(*force*, *performCallback*)
-
-As above except after the update has been completed and if
-*performCallback* is true and a callback function was defined
-at instantiation the the callback function is executed with the
-value of getStatus() as returned at the start of update.
-
-
+Generated by [Moxygen](https://sourcey.com/moxygen)
