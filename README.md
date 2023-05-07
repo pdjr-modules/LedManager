@@ -56,14 +56,14 @@ This method should be called from the host loop().
  Values                         | Descriptions                                
 --------------------------------|---------------------------------------------
 ON            | 
-FLASH            | 
-ONCE            | 
-TWICE            | 
-THRICE            | 
-OFF            | 
-FLASH_OFF            | 
-TWICE_OFF            | 
-THRICE_OFF            | 
+FLASH            | Steady state on.
+ONCE            | Isophase flashing (start on)
+TWICE            | Flash once.
+THRICE            | Flash twice.
+OFF            | Flash three times.
+FLASH_OFF            | Steady state off.
+TWICE_OFF            | Internal use.
+THRICE_OFF            | Internal use.
 
 Enum defining possible LED control modes.
 

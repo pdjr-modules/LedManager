@@ -29,7 +29,17 @@ class LedManager {
      * isophase flashing. ONCE, TWICE and THRICE imply the indicated
      * number of flashes.
      */
-    enum Mode { ON, FLASH, ONCE, TWICE, THRICE, OFF, FLASH_OFF, TWICE_OFF, THRICE_OFF };
+    enum Mode {
+      ON, /// Steady state on
+      FLASH, /// Isophase flashing (start on)
+      ONCE, /// Flash once
+      TWICE, ///Flash twice
+      THRICE, /// Flash three times
+      OFF, /// Steady state off
+      FLASH_OFF, /// Internal use
+      TWICE_OFF, /// Internal use
+      THRICE_OFF /// Internal use
+    };
 
     /**
      * @brief Construct a new tLedManager instance
