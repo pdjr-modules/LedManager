@@ -6,7 +6,7 @@ Class providing the logic for operating one or more virtual LEDs.
 
  Members                        | Descriptions                                
 --------------------------------|---------------------------------------------
-`public  `[`LedManager`](#classLedManager_1aadf9b05e96cb63a1dac4acf6e5447e87)`(void(*)(unsigned int status) callback,unsigned long interval)` | Construct a new tLedManager instance.
+`public  `[`LedManager`](#classLedManager_1aadf9b05e96cb63a1dac4acf6e5447e87)`(void(*)(unsigned int status) callback,unsigned long interval)` | Construct a new [LedManager](#classLedManager) instance.
 `public void `[`setStatus`](#classLedManager_1a82ccd1a568933b058f6b16e18e03e31e)`(unsigned int status)` | Set the Mode of each LED in the contro group to ON or OFF.
 `public void `[`setLedState`](#classLedManager_1a9f0d7cdaa44dc0552b53b68cd6031d7e)`(unsigned int led,`[`LedManager::Mode`](#classLedManager_1a6f4de90d7619e5cb9b40ec23a1730ab0)` mode)` | Set the state of particular LED.
 `public void `[`update`](#classLedManager_1ae549d2947bc00d5ebc85ed6e6b34c368)`()` | Perform a mode transition on all LEDs in the control group at the specified update interval.
@@ -16,7 +16,7 @@ Class providing the logic for operating one or more virtual LEDs.
 
 #### `public  `[`LedManager`](#classLedManager_1aadf9b05e96cb63a1dac4acf6e5447e87)`(void(*)(unsigned int status) callback,unsigned long interval)` 
 
-Construct a new tLedManager instance.
+Construct a new [LedManager](#classLedManager) instance.
 
 #### Parameters
 * `callback` - function to operate a physical output device. 
