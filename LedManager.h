@@ -47,7 +47,7 @@ class LedManager {
     };
 
     /**
-     * @brief Construct a new tLedManager instance
+     * @brief Construct a new LedManager instance
      * 
      * @param callback - function to operate a physical output device.
      * @param interval - equiphase heartbeat interval in milliseconds.
