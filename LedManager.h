@@ -57,10 +57,10 @@ class LedManager {
     };
 
     /**
-     * @brief Construct a new LedManager instance
-     * 
      * @param callback - function to operate a physical output device.
      * @param interval - equiphase heartbeat interval in milliseconds.
+     *
+     * @brief Construct a new LedManager instance 
      * 
      * Instantiates a new control group with the state of all LEDs
      * initialised to OFF.
@@ -73,10 +73,10 @@ class LedManager {
     LedManager(void (*callback)(unsigned int status), unsigned long interval = 200);
 
     /**
-     * @brief Set the Mode of each LED in the contro group to ON or
-     * OFF.
-     * 
      * @param status - Set the LedManager::Mode of the LED group.
+     *
+     * @brief Set the Mode of each LED in the contro group to ON or
+     * OFF. 
      * 
      * If a bit in @ref is 1, the corresponding LED Mode is set ON; a 0
      * bit sets the corresponding LED Mode to OFF.
@@ -84,10 +84,10 @@ class LedManager {
     void setStatus(unsigned int status);
 
     /**
-     * @brief Set the state of particular LED.
-     * 
      * @param led - index of the LED to be updated.
      * @param mode - the Mode to be assigned.
+     * 
+     * @brief Set the state of particular LED.
      */
     void setLedState(unsigned int led, LedManager::Mode mode);
     
