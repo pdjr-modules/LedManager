@@ -30,15 +30,24 @@ class LedManager {
      * number of flashes.
      */
     enum Mode {
-      ON, /// Steady state on
-      FLASH, /// Isophase flashing (start on)
-      ONCE, /// Flash once
-      TWICE, ///Flash twice
-      THRICE, /// Flash three times
-      OFF, /// Steady state off
-      FLASH_OFF, /// Internal use
-      TWICE_OFF, /// Internal use
-      THRICE_OFF /// Internal use
+      /// Steady state on
+      ON,
+      /// Isophase flashing (start on)
+      FLASH,
+      /// Flash once
+      ONCE,
+      ///Flash twice
+      TWICE,
+      /// Flash three times
+      THRICE,
+      /// Steady state off
+      OFF,
+      /// Internal use
+      FLASH_OFF,
+      /// Internal use
+      TWICE_OFF,
+      /// Internal use
+      THRICE_OFF
     };
 
     /**

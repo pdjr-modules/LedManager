@@ -55,13 +55,13 @@ This method should be called from the host loop().
 
  Values                         | Descriptions                                
 --------------------------------|---------------------------------------------
-ON            | 
-FLASH            | Steady state on.
-ONCE            | Isophase flashing (start on)
-TWICE            | Flash once.
-THRICE            | Flash twice.
-OFF            | Flash three times.
-FLASH_OFF            | Steady state off.
+ON            | Steady state on.
+FLASH            | Isophase flashing (start on)
+ONCE            | Flash once.
+TWICE            | Flash twice.
+THRICE            | Flash three times.
+OFF            | Steady state off.
+FLASH_OFF            | Internal use.
 TWICE_OFF            | Internal use.
 THRICE_OFF            | Internal use.
 
