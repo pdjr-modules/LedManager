@@ -60,7 +60,7 @@ class LedManager {
      * @param callback - function to operate a physical output device.
      * @param interval - equiphase heartbeat interval in milliseconds.
      *
-     * @brief Construct a new LedManager instance 
+     * @brief Construct a new LedManager instance.
      * 
      * Instantiates a new control group with the state of all LEDs
      * initialised to OFF.
