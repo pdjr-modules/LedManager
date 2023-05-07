@@ -1,5 +1,5 @@
 /**********************************************************************
- * LedManager.h - manage an arbitrary number of leds.
+ * LedManager.h - manage an arbitrary number of virtual LEDs.
  * 2020 (c) Paul Reeve <preeve@pdjr.eu>
  */
 
@@ -7,21 +7,23 @@
 #define LEDMANAGER_H
 
 /**
- * @brief Class providing the logic for operating one or more notional
+ * @brief Class providing the logic for operating one or more virtual
  * LEDs. 
  */
 class LedManager {
 
   public:
     /**
-     * @brief Maximum number of LEDs in a control group. LED state is
-     * output as an unsigned integer, so this value has a maximum equal
-     * to the number of bits in an integer on the host platform.
+     * @brief Maximum number of LEDs to be controlled.
+     * \n 
+     * LED state is output as an unsigned integer, so this value has a
+     * maximum equal to the number of bits in an integer on the host
+     * platform.
      */
     static const unsigned int LED_COUNT = 16;
 
     /**
-     * @brief Enum defining possible LED states.
+     * @brief Enum defining possible LED control modes.
      * 
      * ON and OFF provide steady-state control. FLASH implies continuous
      * isophase flashing. ONCE, TWICE and THRICE imply the indicated

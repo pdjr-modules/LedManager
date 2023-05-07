@@ -1,6 +1,6 @@
 # class `LedManager` 
 
-Class providing the logic for operating one or more notional LEDs.
+Class providing the logic for operating one or more virtual LEDs.
 
 ## Summary
 
@@ -10,7 +10,7 @@ Class providing the logic for operating one or more notional LEDs.
 `public void `[`setStatus`](#classLedManager_1a82ccd1a568933b058f6b16e18e03e31e)`(unsigned int status)` | Set the Mode of each LED in the contro group to ON or OFF.
 `public void `[`setLedState`](#classLedManager_1a9f0d7cdaa44dc0552b53b68cd6031d7e)`(unsigned int led,`[`LedManager::Mode`](#classLedManager_1a6f4de90d7619e5cb9b40ec23a1730ab0)` mode)` | Set the state of particular LED.
 `public void `[`update`](#classLedManager_1ae549d2947bc00d5ebc85ed6e6b34c368)`()` | Perform a mode transition on all LEDs in the control group at the specified update interval.
-`enum `[`Mode`](#classLedManager_1a6f4de90d7619e5cb9b40ec23a1730ab0) | Enum defining possible LED states.
+`enum `[`Mode`](#classLedManager_1a6f4de90d7619e5cb9b40ec23a1730ab0) | Enum defining possible LED control modes.
 
 ## Members
 
@@ -65,7 +65,7 @@ FLASH_OFF            |
 TWICE_OFF            | 
 THRICE_OFF            | 
 
-Enum defining possible LED states.
+Enum defining possible LED control modes.
 
 ON and OFF provide steady-state control. FLASH implies continuous isophase flashing. ONCE, TWICE and THRICE imply the indicated number of flashes.
 
