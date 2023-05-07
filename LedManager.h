@@ -8,7 +8,17 @@
 
 /**
  * @brief Class providing the logic for operating one or more virtual
- * LEDs. 
+ * LEDs.
+ * \n 
+ * LedManager relieves a host application from implementing the logic
+ * required to switch on, switch off and flash multiple virtual
+ * LED-type devices.
+ * \n 
+ * A callback function in the host application is invoked at a
+ * configured interval with the current LED states as its argument:
+ * it is the responsibility of the callback function to perform the
+ * actions necessary to drive connected physical devices (probably
+ * real LEDs) to reflect the virtual states advised by LedManager.
  */
 class LedManager {
 
