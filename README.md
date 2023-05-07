@@ -11,9 +11,9 @@ A callback function in the host application is invoked at a configured interval 
  Members                        | Descriptions                                
 --------------------------------|---------------------------------------------
 `public  `[`LedManager`](#classLedManager_1aadf9b05e96cb63a1dac4acf6e5447e87)`(void(*)(unsigned int status) callback,unsigned long interval)` | Construct a new [LedManager](#classLedManager) instance.
-`public void `[`setStatus`](#classLedManager_1a82ccd1a568933b058f6b16e18e03e31e)`(unsigned int status)` | Set the Mode of each LED in the contro group to ON or OFF.
+`public void `[`setStatus`](#classLedManager_1a82ccd1a568933b058f6b16e18e03e31e)`(unsigned int status)` | Set the state of each LED in the control group to ON or OFF.
 `public void `[`setLedState`](#classLedManager_1a9f0d7cdaa44dc0552b53b68cd6031d7e)`(unsigned int led,`[`LedManager::Mode`](#classLedManager_1a6f4de90d7619e5cb9b40ec23a1730ab0)` mode)` | Set the state of particular LED.
-`public void `[`update`](#classLedManager_1ae549d2947bc00d5ebc85ed6e6b34c368)`()` | Perform a mode transition on all LEDs in the control group at the specified update interval.
+`public void `[`update`](#classLedManager_1ae549d2947bc00d5ebc85ed6e6b34c368)`()` | Perform a mode transition on all LEDs in the control group at the interval specified in the constructor.
 `enum `[`Mode`](#classLedManager_1a6f4de90d7619e5cb9b40ec23a1730ab0) | Enum defining possible LED control modes.
 
 ## Members
@@ -22,23 +22,23 @@ A callback function in the host application is invoked at a configured interval 
 
 Construct a new [LedManager](#classLedManager) instance.
 
+Instantiates a new LED control group with the state of all LEDs initialised to OFF.
+
+Every *interval* milliseconds the *callback* function is invoked with its *status* argument set to represent the current state of the control group: a 0 bit value says 'off'; a 1 bit value says 'on'.
+
 #### Parameters
 * `callback` - function to operate a physical output device. 
 
 * `interval` - equiphase heartbeat interval in milliseconds.
 
-Instantiates a new control group with the state of all LEDs initialised to OFF.
-
-Every interval milliseconds the callback function is invoked with its status argument set to represent the current state of the control group: a 0 bit value says 'off'; a 1 bit value says 'on'.
-
 #### `public void `[`setStatus`](#classLedManager_1a82ccd1a568933b058f6b16e18e03e31e)`(unsigned int status)` 
 
-Set the Mode of each LED in the contro group to ON or OFF.
+Set the state of each LED in the control group to ON or OFF.
+
+If a bit in *status* is 1, the corresponding LED Mode is set ON; a 0 bit sets the corresponding LED Mode to OFF.
 
 #### Parameters
-* `status` - Set the [LedManager::Mode](#classLedManager_1a6f4de90d7619e5cb9b40ec23a1730ab0) of the LED group.
-
-If a bit in is 1, the corresponding LED Mode is set ON; a 0 bit sets the corresponding LED Mode to OFF.
+* `status` - binary value setting LED states.
 
 #### `public void `[`setLedState`](#classLedManager_1a9f0d7cdaa44dc0552b53b68cd6031d7e)`(unsigned int led,`[`LedManager::Mode`](#classLedManager_1a6f4de90d7619e5cb9b40ec23a1730ab0)` mode)` 
 
@@ -51,7 +51,7 @@ Set the state of particular LED.
 
 #### `public void `[`update`](#classLedManager_1ae549d2947bc00d5ebc85ed6e6b34c368)`()` 
 
-Perform a mode transition on all LEDs in the control group at the specified update interval.
+Perform a mode transition on all LEDs in the control group at the interval specified in the constructor.
 
 This method should be called from the host loop().
 

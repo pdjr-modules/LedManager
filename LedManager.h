@@ -57,43 +57,43 @@ class LedManager {
     };
 
     /**
-     * @param callback - function to operate a physical output device.
-     * @param interval - equiphase heartbeat interval in milliseconds.
-     *
      * @brief Construct a new LedManager instance.
-     * 
-     * Instantiates a new control group with the state of all LEDs
+     *
+     * Instantiates a new LED control group with the state of all LEDs
      * initialised to OFF.
      * 
-     * Every @ref interval milliseconds the @ref callback function is
-     * invoked with its @ref status argument set to represent the
+     * Every \a interval milliseconds the \a callback function is
+     * invoked with its \a status argument set to represent the
      * current state of the control group: a 0 bit value says 'off'; a
      * 1 bit value says 'on'.
+     * 
+     * @param callback - function to operate a physical output device.
+     * @param interval - equiphase heartbeat interval in milliseconds.
      */
     LedManager(void (*callback)(unsigned int status), unsigned long interval = 200);
 
     /**
-     * @param status - Set the LedManager::Mode of the LED group.
-     *
-     * @brief Set the Mode of each LED in the contro group to ON or
+     * @brief Set the state of each LED in the control group to ON or
      * OFF. 
      * 
-     * If a bit in @ref is 1, the corresponding LED Mode is set ON; a 0
-     * bit sets the corresponding LED Mode to OFF.
+     * If a bit in \a status is 1, the corresponding LED Mode is set ON;
+     * a 0 bit sets the corresponding LED Mode to OFF.
+     * 
+     * @param status - binary value setting LED states.
      */
     void setStatus(unsigned int status);
 
     /**
+     * @brief Set the state of particular LED.
+     * 
      * @param led - index of the LED to be updated.
      * @param mode - the Mode to be assigned.
-     * 
-     * @brief Set the state of particular LED.
      */
     void setLedState(unsigned int led, LedManager::Mode mode);
     
     /**
      * @brief Perform a mode transition on all LEDs in the control
-     * group at the specified update interval.
+     * group at the interval specified in the constructor.
      * 
      * This method should be called from the host loop().
      */
