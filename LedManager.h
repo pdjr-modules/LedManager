@@ -24,10 +24,6 @@ class LedManager {
 
     /**
      * @brief Enum defining possible LED control modes.
-     * 
-     * ON and OFF provide steady-state control. FLASH implies continuous
-     * isophase flashing. ONCE, TWICE and THRICE imply the indicated
-     * number of flashes.
      */
     enum Mode {
       /// Steady state on
